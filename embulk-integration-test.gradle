@@ -1,7 +1,7 @@
 //
 // Usage:
 // Apply this gradle config file.
-//   apply from: 'https://.../gradle-plugins/embulk-integration-test.gradle'
+//   apply from: 'https://raw.githubusercontent.com/hata/gradle-plugins/master/embulk-integration-test.gradle'
 // Set dependency like this:
 //   project.tasks.integrationTest.dependsOn(classpath)
 //
