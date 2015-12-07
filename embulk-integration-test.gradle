@@ -6,7 +6,7 @@
 //   project.tasks.integrationTest.dependsOn(classpath)
 //
 // To disable this plugin
-// ./gradlew -DskipIntegrationTest=true gem
+// ./gradlew -DenableIntegrationTest=true gem
 //
 
 apply from: 'https://raw.github.com/brunodecarvalho/gradle-plugins/master/integration-test.gradle'
@@ -14,14 +14,14 @@ apply from: 'https://raw.github.com/brunodecarvalho/gradle-plugins/master/integr
 // TODO: Can I override these properties ?
 def embulkDownloadURL = "http://dl.embulk.org/embulk-latest.jar"
 def embulkExecPath = ''
-def skipIntegrationTestFlag = Boolean.getBoolean('skipIntegrationTest')
+def enableIntegrationTestFlag = Boolean.getBoolean('enableIntegrationTest')
 def embulkIntegrationTestDir = 'embulk.integrationtest.dir'
 
 task downloadEmbulk {
   embulkExecPath = "$temporaryDir/embulk/bin/embulk"
 
   doFirst {
-    if (skipIntegrationTestFlag) {
+    if (!enableIntegrationTestFlag) {
       throw new StopExecutionException('Skip downloadEmbulk task.')
     }
   }
@@ -48,7 +48,7 @@ integrationTest.doFirst {
   String baseDir = "$temporaryDir/embulk"
   systemProperty "$embulkIntegrationTestDir", "$baseDir"
 
-  if (skipIntegrationTestFlag) {
+  if (!enableIntegrationTestFlag) {
     throw new StopExecutionException('Skip integrationTest task.')
   }
 
