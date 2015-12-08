@@ -59,19 +59,13 @@ integrationTest.doFirst {
 
   fileTree(dir: "$baseDir", include: "*.yml").visit { config ->
     ['preview', 'run'].each { embulkCommand ->
-      String mvCmd = "mv ${config.file.absolutePath}.${embulkCommand}.log ${config.file.absolutePath}.${embulkCommand}.log.old"
-      String execCmd = "$embulkExecPath $embulkCommand -I $libDir $config.file.absolutePath --log ${config.file.absolutePath}.${embulkCommand}.log"
+      String logFile = "${config.file.absolutePath}.${embulkCommand}.log"
+      delete logFile
 
       exec {
         workingDir baseDir
         executable "sh"
-        args "-c", mvCmd
-      }
-
-      exec {
-        workingDir baseDir
-        executable "sh"
-        args "-c", execCmd
+        args "-c", "$embulkExecPath $embulkCommand -I $libDir $config.file.absolutePath --log $logFile"
       }
     }
   }
