@@ -5,7 +5,7 @@
 // Set dependency like this:
 //   project.tasks.integrationTest.dependsOn(classpath)
 //
-// To disable this plugin
+// To enable this plugin
 // ./gradlew -DenableIntegrationTest=true gem
 //
 

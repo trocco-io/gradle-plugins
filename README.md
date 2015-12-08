@@ -7,8 +7,11 @@ Repository for gradle plugins
 ## embulk-integration-test.gradle
 
 Add 'integrationTest' task for embulk. The task search '*.yml' files and run it with embulk.
-embulk log files are like '*.yml.run.log'. After running embulk, these log files can use
-from test code under 'src/integration-test/java/'.
+There are the log files after running embulk like '*.yml.run.log'. After running embulk,
+these log files can use from test code under 'src/integration-test/java/'.
+
+Right now, this task is skipped by default if there is no '-DenableIntegrationTest=true' flag
+because this task is a platform dependent task. Please set the system property to run this task.
 
 * Apply this gradle config file.
 
@@ -22,10 +25,10 @@ from test code under 'src/integration-test/java/'.
    project.tasks.integrationTest.dependsOn(classpath)
 ```
 
-* To skip this plugin
+* To enable this plugin tasks
 
 ```
-  $ ./gradlew -DskipIntegrationTest=true gem
+  $ ./gradlew -DenableIntegrationTest=true gem
 ```
 
 
