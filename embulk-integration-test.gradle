@@ -58,7 +58,8 @@ integrationTest.doFirst {
   }
 
   fileTree(dir: "$baseDir", include: "*.yml").visit { config ->
-    ['preview', 'run'].each { embulkCommand ->
+    // Note: preview command looks not to use plugins. So, use run command only.
+    ['run'].each { embulkCommand ->
       exec {
         workingDir baseDir
         executable "sh"
