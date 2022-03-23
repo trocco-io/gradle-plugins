@@ -9,7 +9,30 @@
 // ./gradlew -DenableIntegrationTest=true gem
 //
 
-apply from: 'https://raw.github.com/brunodecarvalho/gradle-plugins/master/integration-test.gradle'
+// src: https://github.com/brunodecarvalho/gradle-plugins/blob/master/integration-test.gradle
+sourceSets {
+  integrationTest { sourceSet ->
+    ["java", "groovy", "scala", "resources"].each {
+      if (!sourceSet.hasProperty(it)) return
+      sourceSet."$it".srcDir file("src/integration-test/${it}")
+    }
+  }
+}
+
+// Setup dependencies for integration testing
+dependencies {
+  integrationTestImplementation sourceSets.main.output
+  integrationTestImplementation sourceSets.test.output
+  integrationTestImplementation configurations.testCompileClasspath
+  integrationTestRuntimeOnly configurations.testRuntimeClasspath
+}
+
+// Define integration test task
+task integrationTest(type: Test) {
+  testClassesDirs = sourceSets.integrationTest.output.classesDirs
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  reports.html.enabled = false
+}
 
 // TODO: Can I override these properties ?
 def embulkDownloadURL = "http://dl.embulk.org/embulk-latest.jar"
